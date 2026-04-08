@@ -4,6 +4,7 @@ import { Toaster } from "sonner";
 import "./globals.css";
 import Sidebar from "@/components/Sidebar"; // 1. Import komponen Sidebar baru
 import PageLoader from "@/components/PageLoader";
+import { Suspense } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,7 +21,9 @@ export default function RootLayout({
     <html lang="id">
       <body className={inter.className}>
         {/* 2. Letakkan Toaster di sini agar bisa muncul di mana saja */}
-        <PageLoader />
+        <Suspense fallback={null}>
+          <PageLoader />
+        </Suspense>
         <Toaster position="bottom-right" richColors closeButton />
 
         <div className="flex h-screen bg-gray-100 font-sans text-gray-900">
