@@ -2,6 +2,7 @@ import { supabase } from "@/lib/supabase";
 import { hapusKriteria } from "@/actions/kriteriaActions";
 import ModalTambahKriteria from "@/components/ModalTambahKriteria";
 import ModalEditKriteria from "@/components/ModalEditKriteria";
+import DeleteButton from "@/components/DeleteButton";
 
 export const revalidate = 0;
 
@@ -103,12 +104,7 @@ export default async function KriteriaPage() {
 
                       <form action={hapusKriteria}>
                         <input type="hidden" name="id" value={item.id} />
-                        <button
-                          type="submit"
-                          className="px-3 py-1.5 text-xs font-bold text-red-600 hover:text-red-700 hover:bg-red-50 rounded-lg transition-all"
-                        >
-                          Hapus
-                        </button>
+                        <DeleteButton />
                       </form>
                     </div>
                   </td>
