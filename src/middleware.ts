@@ -35,6 +35,7 @@ export async function middleware(request: NextRequest) {
   // Daftar rute URL yang harus digembok
   const path = request.nextUrl.pathname;
   const isProtectedRoute =
+    path === "/" ||
     path.startsWith("/kriteria") ||
     path.startsWith("/alternatif") ||
     path.startsWith("/penilaian");
