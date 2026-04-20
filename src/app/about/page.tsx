@@ -121,9 +121,6 @@ export default function AboutPage() {
                 <h3 className="text-lg font-bold text-gray-800 mb-1 group-hover:text-blue-600 transition-colors duration-300">
                   {member.name}
                 </h3>
-                <p className="text-sm font-semibold text-blue-600 mb-4">
-                  {member.role}
-                </p>
 
                 <div className="bg-gray-50/80 px-3 py-1.5 rounded-md border border-gray-100 w-full group-hover:bg-blue-50 group-hover:border-blue-100 transition-colors duration-300 mt-auto">
                   <p className="text-xs font-mono text-gray-500 group-hover:text-blue-700 tracking-wide transition-colors duration-300">
