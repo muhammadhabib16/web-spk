@@ -8,8 +8,7 @@ const teamMembers = [
     id: 1,
     name: "Muhammad Habib",
     nim: "2411522024", // Saya tambahkan kembali rolenya yang sempat hilang
-    photo:
-      "https://ui-avatars.com/api/?name=Muhammad+Habib&background=f1f5f9&color=475569&size=256",
+    photo: "/team/Habib.jpeg",
   },
   {
     id: 2,
@@ -21,15 +20,13 @@ const teamMembers = [
     id: 3,
     name: "Talitha Nafisa Khairul",
     nim: "2411522007",
-    photo:
-      "https://ui-avatars.com/api/?name=Talitha+Nafisa&background=f1f5f9&color=475569&size=256",
+    photo: "/team/fisa.jpeg",
   },
   {
     id: 4,
     name: "Adinda Najwa Otvatiani",
     nim: "2411523003",
-    photo:
-      "https://ui-avatars.com/api/?name=Adinda+Najwa&background=f1f5f9&color=475569&size=256",
+    photo: "/team/Adinda.jpeg",
   },
 ];
 
