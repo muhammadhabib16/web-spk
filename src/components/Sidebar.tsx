@@ -163,7 +163,7 @@ export default function Sidebar() {
               />
             </svg>
           </div>
-          SPK<span className="text-gray-800">Fashion</span>
+          Ecom<span className="text-gray-800">Rank</span>
         </h2>
       </div>
 

@@ -15,8 +15,7 @@ const teamMembers = [
     id: 2,
     name: "Aldo Septia Elvawan",
     nim: "2411522013",
-    photo:
-      "https://ui-avatars.com/api/?name=Aldo+Septia&background=f1f5f9&color=475569&size=256",
+    photo: "/team/Aldo.jpeg",
   },
   {
     id: 3,
@@ -109,7 +108,7 @@ export default function AboutPage() {
                 className="bg-white/80 backdrop-blur-md border border-white/60 p-8 rounded-2xl shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300 flex flex-col items-center text-center group"
               >
                 {/* Frame Foto Sederhana */}
-                <div className="w-24 h-24 mb-5 overflow-hidden rounded-full border border-gray-100 shadow-sm group-hover:shadow-md transition-all duration-300">
+                <div className="w-40 h-40 mb-5 overflow-hidden rounded-4xl border border-gray-100 shadow-sm group-hover:shadow-md transition-all duration-300">
                   <img
                     src={member.photo}
                     alt={`Foto ${member.name}`}
