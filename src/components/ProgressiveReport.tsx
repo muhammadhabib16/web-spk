@@ -1,11 +1,13 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, Variants, Transition } from "framer-motion";
 
-// Kurva animasi custom yang sangat smooth (Ease Out Expo)
-const smoothTransition = { duration: 0.8, ease: [0.16, 1, 0.3, 1] };
-
+// 2. Berikan tipe data ': Transition' secara eksplisit
+const smoothTransition: Transition = {
+  duration: 0.8,
+  ease: [0.16, 1, 0.3, 1], // Kurva Bezier ini sekarang aman karena tipenya sudah jelas
+};
 export default function ProgressiveReport({
   processData,
 }: {
