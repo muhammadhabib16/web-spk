@@ -7,7 +7,7 @@ import { logout } from "@/actions/authActions";
 // Data menu navigasi dipisah agar kode lebih rapi (Best Practice React)
 const navItems = [
   {
-    name: "Leaderboard",
+    name: "Dashboard",
     href: "/",
     icon: (
       <svg
@@ -21,7 +21,7 @@ const navItems = [
           strokeLinecap="round"
           strokeLinejoin="round"
           strokeWidth={2}
-          d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
+          d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"
         />
       </svg>
     ),
@@ -92,6 +92,46 @@ const navItems = [
       </svg>
     ),
   },
+  {
+    name: "Leaderboard Hasil",
+    href: "/laporan",
+    icon: (
+      <svg
+        className="w-5 h-5"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
+        />
+      </svg>
+    ),
+  },
+  {
+    name: "Tentang Kami",
+    href: "/about",
+    icon: (
+      <svg
+        className="w-5 h-5"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"
+        />
+      </svg>
+    ),
+  },
 ];
 
 export default function Sidebar() {
@@ -107,6 +147,7 @@ export default function Sidebar() {
       <div className="px-8 py-8">
         <h2 className="text-2xl font-black text-blue-600 tracking-tighter flex items-center gap-2">
           <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white">
+            {/* ICON DIPERBARUI: Tas Belanja */}
             <svg
               className="w-5 h-5"
               fill="none"
@@ -118,7 +159,7 @@ export default function Sidebar() {
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 strokeWidth={2.5}
-                d="M13 10V3L4 14h7v7l9-11h-7z"
+                d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
               />
             </svg>
           </div>
@@ -129,6 +170,7 @@ export default function Sidebar() {
       {/* Navigation */}
       <nav className="flex-1 px-4 space-y-1.5 overflow-y-auto">
         {navItems.map((item) => {
+          // Penyesuaian agar isActive tepat (terutama untuk root '/')
           const isActive = pathname === item.href;
 
           return (
@@ -142,7 +184,11 @@ export default function Sidebar() {
               }`}
             >
               <div
-                className={`${isActive ? "text-white" : "text-gray-400 group-hover:text-blue-600"} transition-colors`}
+                className={`${
+                  isActive
+                    ? "text-white"
+                    : "text-gray-400 group-hover:text-blue-600"
+                } transition-colors`}
               >
                 {item.icon}
               </div>

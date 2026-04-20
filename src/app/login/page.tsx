@@ -1,6 +1,7 @@
 import { createClient } from "@/lib/supabaseServer";
 import { redirect } from "next/navigation";
-import InteractiveParticles from "@/components/InteractiveParticles"; // 1. Import komponen
+import InteractiveParticles from "@/components/InteractiveParticles";
+import LoginButton from "@/components/LoginButton";
 
 export default async function LoginPage({
   searchParams,
@@ -17,28 +18,76 @@ export default async function LoginPage({
       password,
     });
     if (error) return redirect("/login?error=true");
-    return redirect("/kriteria");
+    return redirect("/"); // Arahkan ke dashboard utama setelah login
   };
 
   return (
-    // Background: Gradasi Linear Halus
-    <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden bg-gradient-to-br from-blue-100 via-white to-blue-50">
-      {/* 2. Partikel Interaktif di Background */}
-      <InteractiveParticles />
+    // Container Utama: Split Screen
+    <div className="min-h-screen flex relative overflow-hidden bg-gradient-to-br from-blue-50 via-white to-blue-100">
+      {/* --- SISI KIRI: Visual & Partikel (Sembunyi di layar HP) --- */}
+      <div className="hidden md:flex flex-1 relative flex-col items-center justify-center p-12">
+        {/* Partikel Interaktif */}
+        <div className="absolute inset-0 z-0">
+          <InteractiveParticles />
+        </div>
 
-      {/* Ornamen Blur Tambahan agar tetap estetik */}
-      <div className="absolute inset-0 z-0 pointer-events-none">
-        <div className="absolute top-[-10%] left-[-5%] w-96 h-96 bg-blue-200/30 rounded-full blur-[120px] animate-pulse"></div>
-        <div className="absolute bottom-[-10%] right-[-5%] w-96 h-96 bg-blue-300/20 rounded-full blur-[120px] animate-pulse delay-1000"></div>
-      </div>
+        {/* Ornamen Blur */}
+        <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+          <div className="absolute top-[20%] left-[15%] w-[400px] h-[400px] bg-blue-300/20 rounded-full blur-[100px] animate-pulse"></div>
+          <div className="absolute bottom-[20%] right-[20%] w-[500px] h-[500px] bg-indigo-300/10 rounded-full blur-[120px] animate-pulse delay-1000"></div>
+        </div>
 
-      {/* Container Form: Ultra-Clean Glassmorphism */}
-      <div className="max-w-md w-full bg-white/60 backdrop-blur-3xl rounded-[3rem] shadow-[0_32px_64px_-15px_rgba(59,130,246,0.12)] p-12 border border-white/80 relative z-10 animate-in fade-in zoom-in-95 duration-1000">
-        {/* Header Section */}
-        <div className="text-center mb-10">
-          <div className="inline-flex items-center justify-center w-20 h-20 bg-blue-600 rounded-[2rem] mb-6 shadow-2xl shadow-blue-400/40 hover:scale-110 transition-transform duration-500">
+        {/* Copywriting Branding */}
+        <div className="relative z-10 text-center select-none pointer-events-none">
+          <div className="inline-flex items-center justify-center w-20 h-20 bg-blue-600 rounded-2xl mb-8 shadow-2xl shadow-blue-400/40 rotate-3">
+            {/* ICON DIPERBARUI: Tas Belanja */}
             <svg
               className="w-10 h-10 text-white"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
+              />
+            </svg>
+          </div>
+          <h2 className="text-5xl lg:text-6xl font-black text-gray-900 tracking-tighter leading-tight mb-4">
+            Keputusan Tepat,
+            <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">
+              Masa Depan Cepat.
+            </span>
+          </h2>
+          <p className="text-gray-500 font-medium text-lg lg:text-xl">
+            Sistem Penunjang Keputusan E-Commerce Fashion.
+          </p>
+        </div>
+      </div>
+
+      {/* --- SISI KANAN: Panel Form Login --- */}
+      {/* Menggunakan w-full di HP, max-w-md/lg di desktop, rounded-none agar nempel ke tepi */}
+      <div className="w-full md:w-[450px] lg:w-[500px] bg-white/95 backdrop-blur-2xl h-screen flex flex-col justify-center px-8 sm:px-14 border-l border-gray-100 shadow-[-20px_0_40px_-15px_rgba(0,0,0,0.05)] relative z-10 animate-in slide-in-from-right-16 duration-700 overflow-y-auto">
+        {/* Header Form */}
+        <div className="mb-10">
+          <h1 className="text-3xl sm:text-4xl font-black text-gray-900 tracking-tight">
+            Selamat Datang
+          </h1>
+          <p className="text-sm font-medium text-gray-500 mt-2">
+            Silakan masuk dengan kredensial administrator Anda untuk mengakses
+            Dashboard SPK.
+          </p>
+        </div>
+
+        {/* Pesan Error */}
+        {searchParams.error && (
+          <div className="mb-6 p-4 bg-red-50 border border-red-100 text-red-600 text-sm rounded-xl flex items-center gap-3">
+            <svg
+              className="w-5 h-5 shrink-0"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -46,42 +95,32 @@ export default async function LoginPage({
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                strokeWidth={2.5}
-                d="M13 10V3L4 14h7v7l9-11h-7z"
+                strokeWidth={2}
+                d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
               />
             </svg>
-          </div>
-          <h1 className="text-4xl font-black text-gray-900 tracking-tighter">
-            SPK<span className="text-blue-600">Fashion</span>
-          </h1>
-          <p className="text-[10px] font-black text-gray-400 uppercase tracking-[0.4em] mt-3">
-            Admin Secure Access
-          </p>
-        </div>
-
-        {/* Error Message */}
-        {searchParams.error && (
-          <div className="mb-8 p-4 bg-red-50/80 backdrop-blur-md border border-red-100 text-red-600 text-sm rounded-2xl flex items-center gap-3 animate-bounce">
             <p className="font-bold">Email atau password salah.</p>
           </div>
         )}
 
-        <form action={signIn} className="space-y-6">
+        {/* Form Login */}
+        <form action={signIn} className="space-y-5">
           <div className="space-y-2">
-            <label className="text-[10px] font-black text-blue-600 uppercase tracking-widest ml-2">
-              Email
+            <label className="text-[11px] font-bold text-gray-500 uppercase tracking-widest ml-1">
+              Alamat Email
             </label>
+            {/* Radius dikurangi menjadi rounded-xl, bukan lagi 2xl/3rem */}
             <input
               type="email"
               name="email"
               required
               placeholder="admin@spk.com"
-              className="w-full px-6 py-4.5 bg-white/50 border border-white rounded-2xl focus:ring-4 focus:ring-blue-100 focus:bg-white focus:outline-none transition-all duration-300 font-semibold"
+              className="w-full px-5 py-4 bg-gray-50/50 border border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-50 focus:bg-white focus:border-blue-400 focus:outline-none transition-all duration-300 font-semibold text-gray-800 placeholder:text-gray-400"
             />
           </div>
 
           <div className="space-y-2">
-            <label className="text-[10px] font-black text-blue-600 uppercase tracking-widest ml-2">
+            <label className="text-[11px] font-bold text-gray-500 uppercase tracking-widest ml-1">
               Password
             </label>
             <input
@@ -89,21 +128,19 @@ export default async function LoginPage({
               name="password"
               required
               placeholder="••••••••"
-              className="w-full px-6 py-4.5 bg-white/50 border border-white rounded-2xl focus:ring-4 focus:ring-blue-100 focus:bg-white focus:outline-none transition-all duration-300 font-semibold"
+              className="w-full px-5 py-4 bg-gray-50/50 border border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-50 focus:bg-white focus:border-blue-400 focus:outline-none transition-all duration-300 font-semibold text-gray-800 placeholder:text-gray-400"
             />
           </div>
 
-          <button
-            type="submit"
-            className="w-full bg-blue-600 hover:bg-blue-500 active:scale-95 text-white font-black py-5 rounded-2xl transition-all duration-300 shadow-xl shadow-blue-300/50 mt-4 flex items-center justify-center gap-3 text-lg"
-          >
-            Masuk ke Sistem
-          </button>
+          <div className="pt-2">
+            <LoginButton />
+          </div>
         </form>
 
-        <div className="mt-12 text-center opacity-40">
-          <p className="text-[9px] font-black uppercase tracking-[0.3em]">
-            SPK SAW &copy; 2026
+        {/* Footer / Copyright */}
+        <div className="mt-16 text-left opacity-50">
+          <p className="text-[10px] font-bold uppercase tracking-widest text-gray-500">
+            &copy; {new Date().getFullYear()} SPK SAW System
           </p>
         </div>
       </div>

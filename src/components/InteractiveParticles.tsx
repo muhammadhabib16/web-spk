@@ -17,6 +17,7 @@ export default function InteractiveParticles() {
 
   const options = useMemo(
     () => ({
+      fullScreen: { enable: false },
       fpsLimit: 120,
       interactivity: {
         events: {
