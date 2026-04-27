@@ -10,7 +10,7 @@ import { Suspense } from "react";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "SPK Fashion - SAW",
+  title: "EcomRank",
   description: "Sistem Penunjang Keputusan E-Commerce Fashion",
 };
 
@@ -21,9 +21,6 @@ export default function RootLayout({
 }) {
   return (
     <html lang="id">
-      <head>
-        <title>EcomRank</title>
-      </head>
       <body className={inter.className}>
         <Suspense fallback={null}>
           <PageLoader />
