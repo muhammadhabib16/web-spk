@@ -366,29 +366,78 @@ export default function ProgressiveReport({
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-50">
-                    {remainingRankings.map((item: any, index: number) => (
-                      <tr
-                        key={item.id}
-                        className="hover:bg-gray-50/80 transition-all group"
-                      >
-                        <td className="px-6 py-4 text-center">
-                          <span className="inline-flex items-center justify-center w-8 h-8 rounded-full font-black text-xs bg-gray-100 text-gray-500">
-                            {index + 1}
-                          </span>
-                        </td>
-                        <td className="px-6 py-4 font-bold text-gray-700">
-                          {item.nama}
-                        </td>
-                        <td className="px-6 py-4 hidden sm:table-cell text-[10px] font-mono text-gray-400">
-                          {item.rincian.join(" + ")}
-                        </td>
-                        <td className="px-6 py-4 text-right">
-                          <span className="font-mono text-xl font-black text-blue-600">
-                            {Number(item.skor).toFixed(4)}
-                          </span>
-                        </td>
-                      </tr>
-                    ))}
+                    {remainingRankings.map((item: any, index: number) => {
+                      const actualRank = index + 1;
+
+                      // --- LOGIKA STYLE DINAMIS BERDASARKAN RANK ---
+                      let rowStyle = "hover:bg-gray-50/80";
+                      let badgeStyle = "bg-gray-100 text-gray-500";
+                      let scoreStyle = "text-blue-600";
+                      let nameStyle = "text-gray-700";
+
+                      if (actualRank === 1) {
+                        rowStyle =
+                          "bg-amber-50/50 hover:bg-amber-100/70 border-l-4 border-l-amber-400";
+                        badgeStyle =
+                          "bg-amber-100 text-amber-700 shadow-sm shadow-amber-200/50";
+                        scoreStyle = "text-amber-600";
+                        nameStyle = "text-amber-950 font-black";
+                      } else if (actualRank === 2) {
+                        rowStyle =
+                          "bg-slate-50/50 hover:bg-slate-100/80 border-l-4 border-l-slate-400";
+                        badgeStyle =
+                          "bg-slate-200 text-slate-700 shadow-sm shadow-slate-300/50";
+                        scoreStyle = "text-slate-600";
+                        nameStyle = "text-slate-900 font-extrabold";
+                      } else if (actualRank === 3) {
+                        rowStyle =
+                          "bg-orange-50/30 hover:bg-orange-100/50 border-l-4 border-l-orange-400";
+                        badgeStyle =
+                          "bg-orange-100 text-orange-800 shadow-sm shadow-orange-200/50";
+                        scoreStyle = "text-orange-600";
+                        nameStyle = "text-orange-950 font-extrabold";
+                      }
+
+                      return (
+                        <tr
+                          key={item.id}
+                          className={`transition-all duration-300 group ${rowStyle}`}
+                        >
+                          <td className="px-6 py-4 text-center">
+                            <span
+                              className={`inline-flex items-center justify-center w-8 h-8 rounded-full font-black text-xs transition-colors ${badgeStyle}`}
+                            >
+                              {actualRank}
+                            </span>
+                          </td>
+                          <td className="px-6 py-4">
+                            <div className="flex items-center gap-2">
+                              {/* Tambahan: Emoji Medali */}
+                              {actualRank === 1 && <span>🥇</span>}
+                              {actualRank === 2 && <span>🥈</span>}
+                              {actualRank === 3 && <span>🥉</span>}
+                              <span
+                                className={`font-bold transition-colors ${nameStyle}`}
+                              >
+                                {item.nama}
+                              </span>
+                            </div>
+                          </td>
+                          <td className="px-6 py-4 hidden sm:table-cell">
+                            <div className="text-[10px] font-mono tracking-tight text-gray-400 group-hover:text-gray-500 transition-colors">
+                              {item.rincian.join(" + ")}
+                            </div>
+                          </td>
+                          <td className="px-6 py-4 text-right">
+                            <span
+                              className={`font-mono text-xl font-black transition-colors ${scoreStyle}`}
+                            >
+                              {Number(item.skor).toFixed(4)}
+                            </span>
+                          </td>
+                        </tr>
+                      );
+                    })}
                   </tbody>
                 </table>
               </div>
