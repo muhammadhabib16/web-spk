@@ -106,7 +106,7 @@ export default async function KriteriaPage() {
                       <ModalEditKriteria kriteria={item} />
 
                       {/* PERBAIKAN: Langsung panggil hapusKriteria tanpa fungsi pembungkus anonim */}
-                      <form action={hapusKriteria.bind(null)}>
+                      <form action={hapusKriteria as unknown as any}>
                         <input type="hidden" name="id" value={item.id} />
                         <DeleteButton />
                       </form>
