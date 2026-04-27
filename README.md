@@ -1,36 +1,33 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# EcomRank - Sistem Pendukung Keputusan (SPK) E-commerce
 
-## Getting Started
+EcomRank adalah aplikasi berbasis web yang dirancang untuk membantu menentukan platform e-commerce terbaik menggunakan metode **Simple Additive Weighting (SAW)**. Proyek ini dibangun dengan teknologi modern untuk memberikan hasil perankingan yang akurat dan responsif.
 
-First, run the development server:
+## 🚀 Fitur Utama
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **Manajemen Kriteria**: Kelola kriteria penilaian (Benefit/Cost) beserta bobotnya.
+- **Manajemen Alternatif**: Kelola daftar platform e-commerce (Shopee, Tokopedia, dll).
+- **Matriks Penilaian**: Input nilai setiap alternatif dengan presisi hingga 4 desimal.
+- **Visual Rangking**: Hasil peringkat otomatis dengan badge khusus untuk Juara 1, 2, dan 3.
+- **Database Terintegrasi**: Menggunakan PostgreSQL (Supabase/pgAdmin).
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🛠️ Tech Stack
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Frontend**: [Next.js](https://nextjs.org/) (App Router), TypeScript, Tailwind CSS.
+- **Backend/Database**: [Supabase](https://supabase.com/) (PostgreSQL).
+- **Icons & UI**: Lucide React & Framer Motion.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 📋 Prasyarat
 
-## Learn More
+Sebelum memulai, pastikan Anda sudah menginstal:
 
-To learn more about Next.js, take a look at the following resources:
+- Node.js (v18.x atau terbaru)
+- npm / yarn
+- PostgreSQL atau Akun Supabase
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## ⚙️ Instalasi
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. **Clone Repository**
+   ```bash
+   git clone [https://github.com/username/ecomrank.git](https://github.com/username/ecomrank.git)
+   cd ecomrank
+   ```

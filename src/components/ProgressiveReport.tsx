@@ -8,6 +8,37 @@ const smoothTransition: Transition = {
   ease: [0.16, 1, 0.3, 1],
 };
 
+/**
+ * Fungsi Helper untuk memotong angka tepat di 4 desimal (Tanpa Pembulatan)
+ * Contoh: 0.88239 -> 0.8823
+ */
+const formatTruncate = (num: number) => {
+  if (num === undefined || num === null) return "0.0000";
+
+  // 1. Ubah ke string agar tidak terkena pembulatan otomatis JS
+  // 2. Gunakan regex untuk mengambil 4 angka di belakang titik
+  const regex = /^-?\d+(?:\.\d{0,4})?/;
+  const match = num.toString().match(regex);
+
+  if (!match) return "0.0000";
+
+  let s = match[0];
+  const parts = s.split(".");
+
+  // 3. Jika angka bulat (tidak ada titik), tambahkan .0000
+  if (parts.length === 1) {
+    s += ".0000";
+  } else {
+    // 4. Jika angka desimal tapi kurang dari 4 digit, tambahkan 0 di belakangnya
+    while (parts[1].length < 4) {
+      s += "0";
+      parts[1] += "0";
+    }
+  }
+
+  return s;
+};
+
 export default function ProgressiveReport({
   processData,
 }: {
@@ -66,8 +97,8 @@ export default function ProgressiveReport({
           Laporan Hasil Keputusan
         </h1>
         <p className="text-gray-500 mt-2 text-lg font-medium max-w-2xl">
-          Hasil evaluasi algoritma Simple Additive Weighting (SAW) dengan
-          presisi 4 desimal.
+          Hasil evaluasi algoritma SAW dengan presisi murni 4 desimal (Tanpa
+          Pembulatan).
         </p>
       </motion.header>
 
@@ -119,8 +150,7 @@ export default function ProgressiveReport({
                             key={k.id}
                             className="p-4 text-center text-gray-600 font-mono"
                           >
-                            {/* Format Mentah: Sesuai input (bisa desimal) */}
-                            {Number(matriksMentah[alt.id][k.id]).toFixed(4)}
+                            {formatTruncate(matriksMentah[alt.id][k.id])}
                           </td>
                         ))}
                       </tr>
@@ -134,7 +164,7 @@ export default function ProgressiveReport({
                           key={k.id}
                           className="p-4 text-center font-bold text-amber-600 font-mono"
                         >
-                          {Number(maxValues[k.id]).toFixed(4)}
+                          {formatTruncate(maxValues[k.id])}
                         </td>
                       ))}
                     </tr>
@@ -142,7 +172,6 @@ export default function ProgressiveReport({
                 </table>
               </div>
             </div>
-
             {step === 1 && (
               <div className="mt-8 flex justify-center">
                 <button
@@ -189,7 +218,7 @@ export default function ProgressiveReport({
                         <th key={k.id} className="p-4 text-center font-bold">
                           {k.kode}
                           <div className="text-[10px] text-blue-500/80 mt-0.5 tracking-normal">
-                            W: {Number(k.bobot).toFixed(4)}
+                            W: {formatTruncate(k.bobot)}
                           </div>
                         </th>
                       ))}
@@ -209,10 +238,8 @@ export default function ProgressiveReport({
                             key={k.id}
                             className="p-4 text-center text-blue-600 font-mono font-medium"
                           >
-                            {/* Format Normalisasi 4 Desimal */}
-                            {Number(matriksNormalisasi[alt.id][k.id]).toFixed(
-                              4,
-                            )}
+                            {/* LOGIKA TRUNCATE BERJALAN DI SINI BOS */}
+                            {formatTruncate(matriksNormalisasi[alt.id][k.id])}
                           </td>
                         ))}
                       </tr>
@@ -271,7 +298,7 @@ export default function ProgressiveReport({
                       {rank2.nama}
                     </div>
                     <div className="text-slate-600 font-mono font-black text-lg">
-                      {Number(rank2.skor).toFixed(4)}
+                      {formatTruncate(rank2.skor)}
                     </div>
                   </div>
                   <div className="w-full h-28 bg-gradient-to-t from-slate-300 to-slate-100 rounded-t-xl flex justify-center pt-4">
@@ -290,7 +317,7 @@ export default function ProgressiveReport({
                   transition={{ delay: 0.5, type: "spring" }}
                   className="flex flex-col items-center w-32 sm:w-48 z-20 relative"
                 >
-                  <div className="absolute -top-12 drop-shadow-xl text-yellow-400">
+                  <div className="absolute -top-12 drop-shadow-xl text-yellow-400 text-4xl">
                     👑
                   </div>
                   <div className="bg-white/95 backdrop-blur-sm border-2 border-amber-200 p-4 rounded-2xl shadow-xl w-full text-center mb-4">
@@ -301,7 +328,7 @@ export default function ProgressiveReport({
                       {rank1.nama}
                     </div>
                     <div className="text-amber-600 font-mono font-black text-2xl">
-                      {Number(rank1.skor).toFixed(4)}
+                      {formatTruncate(rank1.skor)}
                     </div>
                   </div>
                   <div className="w-full h-36 bg-gradient-to-t from-amber-400 to-yellow-200 rounded-t-2xl flex justify-center pt-4">
@@ -328,7 +355,7 @@ export default function ProgressiveReport({
                       {rank3.nama}
                     </div>
                     <div className="text-orange-600 font-mono font-black text-lg">
-                      {Number(rank3.skor).toFixed(4)}
+                      {formatTruncate(rank3.skor)}
                     </div>
                   </div>
                   <div className="w-full h-20 bg-gradient-to-t from-orange-400 to-orange-200 rounded-t-xl flex justify-center pt-4">
@@ -368,35 +395,14 @@ export default function ProgressiveReport({
                   <tbody className="divide-y divide-gray-50">
                     {remainingRankings.map((item: any, index: number) => {
                       const actualRank = index + 1;
-
-                      // --- LOGIKA STYLE DINAMIS BERDASARKAN RANK ---
-                      let rowStyle = "hover:bg-gray-50/80";
-                      let badgeStyle = "bg-gray-100 text-gray-500";
-                      let scoreStyle = "text-blue-600";
-                      let nameStyle = "text-gray-700";
-
-                      if (actualRank === 1) {
-                        rowStyle =
-                          "bg-amber-50/50 hover:bg-amber-100/70 border-l-4 border-l-amber-400";
-                        badgeStyle =
-                          "bg-amber-100 text-amber-700 shadow-sm shadow-amber-200/50";
-                        scoreStyle = "text-amber-600";
-                        nameStyle = "text-amber-950 font-black";
-                      } else if (actualRank === 2) {
-                        rowStyle =
-                          "bg-slate-50/50 hover:bg-slate-100/80 border-l-4 border-l-slate-400";
-                        badgeStyle =
-                          "bg-slate-200 text-slate-700 shadow-sm shadow-slate-300/50";
-                        scoreStyle = "text-slate-600";
-                        nameStyle = "text-slate-900 font-extrabold";
-                      } else if (actualRank === 3) {
-                        rowStyle =
-                          "bg-orange-50/30 hover:bg-orange-100/50 border-l-4 border-l-orange-400";
-                        badgeStyle =
-                          "bg-orange-100 text-orange-800 shadow-sm shadow-orange-200/50";
-                        scoreStyle = "text-orange-600";
-                        nameStyle = "text-orange-950 font-extrabold";
-                      }
+                      let rowStyle =
+                        actualRank <= 3
+                          ? actualRank === 1
+                            ? "bg-amber-50/50 border-l-4 border-l-amber-400"
+                            : actualRank === 2
+                              ? "bg-slate-50/50 border-l-4 border-l-slate-400"
+                              : "bg-orange-50/30 border-l-4 border-l-orange-400"
+                          : "hover:bg-gray-50/80";
 
                       return (
                         <tr
@@ -404,35 +410,32 @@ export default function ProgressiveReport({
                           className={`transition-all duration-300 group ${rowStyle}`}
                         >
                           <td className="px-6 py-4 text-center">
-                            <span
-                              className={`inline-flex items-center justify-center w-8 h-8 rounded-full font-black text-xs transition-colors ${badgeStyle}`}
-                            >
+                            <span className="inline-flex items-center justify-center w-8 h-8 rounded-full font-black text-xs bg-gray-100 text-gray-500">
                               {actualRank}
                             </span>
                           </td>
-                          <td className="px-6 py-4">
-                            <div className="flex items-center gap-2">
-                              {/* Tambahan: Emoji Medali */}
-                              {actualRank === 1 && <span>🥇</span>}
-                              {actualRank === 2 && <span>🥈</span>}
-                              {actualRank === 3 && <span>🥉</span>}
-                              <span
-                                className={`font-bold transition-colors ${nameStyle}`}
-                              >
-                                {item.nama}
-                              </span>
-                            </div>
+                          <td className="px-6 py-4 font-bold text-gray-700">
+                            {actualRank === 1 && "🥇 "}
+                            {actualRank === 2 && "🥈 "}
+                            {actualRank === 3 && "🥉 "}
+                            {item.nama}
                           </td>
                           <td className="px-6 py-4 hidden sm:table-cell">
                             <div className="text-[10px] font-mono tracking-tight text-gray-400 group-hover:text-gray-500 transition-colors">
-                              {item.rincian.join(" + ")}
+                              {item.rincian.map((detail: any, i: number) => (
+                                <span key={i}>
+                                  {/* Format W (Bobot) dan R (Normalisasi) ke 4 desimal tanpa pembulatan */}
+                                  ({formatTruncate(detail.w)} ×{" "}
+                                  {formatTruncate(detail.r)})
+                                  {/* Tambahkan tanda + jika bukan elemen terakhir */}
+                                  {i < item.rincian.length - 1 && " + "}
+                                </span>
+                              ))}
                             </div>
                           </td>
                           <td className="px-6 py-4 text-right">
-                            <span
-                              className={`font-mono text-xl font-black transition-colors ${scoreStyle}`}
-                            >
-                              {Number(item.skor).toFixed(4)}
+                            <span className="font-mono text-xl font-black text-blue-600">
+                              {formatTruncate(item.skor)}
                             </span>
                           </td>
                         </tr>

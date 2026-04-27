@@ -1,0 +1,17 @@
+# Core Framework & UI
+next==latest
+react==latest
+react-dom==latest
+typescript
+tailwindcss
+lucide-react
+framer-motion
+
+# Database & Backend
+@supabase/supabase-js
+@supabase/ssr
+
+# Utilities
+clsx
+tailwind-merge
+numeral
