@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence, Transition } from "framer-motion";
-
+import { exportFullReportToExcel } from "@/lib/exportExcel";
 const smoothTransition: Transition = {
   duration: 0.8,
   ease: [0.16, 1, 0.3, 1],
@@ -279,7 +279,13 @@ export default function ProgressiveReport({
                 Puncak Klasemen Leaderboard
               </h2>
             </div>
-
+            {/* TOMBOL EKSPOR */}
+            <button
+              onClick={() => exportFullReportToExcel(processData)} // Masukkan semua processData
+              className="flex items-center gap-2 px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-sm font-bold transition-all shadow-md"
+            >
+              Ekspor Laporan Lengkap
+            </button>
             {/* AREA PODIUM */}
             <div className="flex flex-row items-end justify-center gap-2 sm:gap-6 mt-16 mb-12 h-64 sm:h-72">
               {/* JUARA 2 */}
