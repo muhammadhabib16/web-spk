@@ -1,3 +1,4 @@
+"use server";
 import { supabase } from "@/lib/supabase";
 import { hapusKriteria } from "@/actions/kriteriaActions";
 import ModalTambahKriteria from "@/components/ModalTambahKriteria";
@@ -87,7 +88,11 @@ export default async function KriteriaPage() {
                       }`}
                     >
                       <span
-                        className={`w-1.5 h-1.5 rounded-full ${item.tipe.toLowerCase() === "benefit" ? "bg-emerald-500" : "bg-rose-500"}`}
+                        className={`w-1.5 h-1.5 rounded-full ${
+                          item.tipe.toLowerCase() === "benefit"
+                            ? "bg-emerald-500"
+                            : "bg-rose-500"
+                        }`}
                       ></span>
                       {item.tipe.toUpperCase()}
                     </span>
@@ -98,15 +103,11 @@ export default async function KriteriaPage() {
                     </span>
                   </td>
                   <td className="px-6 py-4">
-                    {/* Aksi Flexbox Modern */}
                     <div className="flex items-center justify-center gap-1 opacity-80 group-hover:opacity-100 transition-opacity">
                       <ModalEditKriteria kriteria={item} />
 
-                      <form
-                        action={async (formData) => {
-                          await hapusKriteria(formData);
-                        }}
-                      >
+                      {/* PERBAIKAN: Langsung panggil hapusKriteria tanpa fungsi pembungkus anonim */}
+                      <form action={hapusKriteria}>
                         <input type="hidden" name="id" value={item.id} />
                         <DeleteButton />
                       </form>
@@ -115,7 +116,6 @@ export default async function KriteriaPage() {
                 </tr>
               ))}
 
-              {/* Empty State Premium */}
               {(!kriteria || kriteria.length === 0) && (
                 <tr>
                   <td colSpan={5} className="p-8">
