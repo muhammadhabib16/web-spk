@@ -1,4 +1,3 @@
-"use server";
 import { supabase } from "@/lib/supabase";
 import { hapusKriteria } from "@/actions/kriteriaActions";
 import ModalTambahKriteria from "@/components/ModalTambahKriteria";
