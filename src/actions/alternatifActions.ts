@@ -12,6 +12,10 @@ export async function tambahAlternatif(formData: FormData) {
 
   if (error) {
     console.error("Gagal tambah alternatif:", error.message);
+    // --- PENGECEKAN DUPLIKAT DI SINI BOS ---
+    if (error.code === "23505") {
+      throw new Error("DUPLICATE_DATA");
+    }
     throw new Error("Gagal menyimpan data alternatif");
   }
 
@@ -32,6 +36,7 @@ export async function hapusAlternatif(formData: FormData) {
   revalidatePath("/alternatif");
 }
 
+// Fungsi Edit Alternatif
 export async function editAlternatif(formData: FormData) {
   const id = parseInt(formData.get("id") as string);
   const kode = formData.get("kode") as string;
@@ -44,6 +49,10 @@ export async function editAlternatif(formData: FormData) {
 
   if (error) {
     console.error("Gagal update alternatif:", error.message);
+    // --- PENGECEKAN DUPLIKAT SAAT EDIT JUGA PENTING ---
+    if (error.code === "23505") {
+      throw new Error("DUPLICATE_DATA");
+    }
     throw new Error("Gagal memperbarui data alternatif");
   }
 

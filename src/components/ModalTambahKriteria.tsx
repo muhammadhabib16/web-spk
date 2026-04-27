@@ -2,17 +2,54 @@
 
 import { useState } from "react";
 import { tambahKriteria } from "@/actions/kriteriaActions";
+import { toast } from "sonner";
 
 export default function ModalTambahKriteria() {
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  // Fungsi pembungkus untuk menutup modal setelah selesai
+  // Fungsi pembungkus dengan penanganan error
   async function handleSubmit(formData: FormData) {
     setIsLoading(true);
-    await tambahKriteria(formData);
-    setIsLoading(false);
-    setIsOpen(false); // Tutup modal otomatis setelah berhasil disimpan
+
+    try {
+      // 1. Jalankan proses simpan kriteria (Sekarang ada validasi total bobot di dalamnya)
+      await tambahKriteria(formData);
+
+      // 2. Jika sukses, beri feedback hijau
+      toast.success("Kriteria Ditambahkan!", {
+        description: "Data kriteria baru telah berhasil disimpan ke sistem.",
+      });
+      setIsOpen(false); // Tutup modal otomatis hanya setelah berhasil disimpan
+    } catch (error: any) {
+      // 3. TANGKAP ERROR SPESIFIK DARI SERVER ACTION
+
+      // A. Error Duplikasi (Kode/Nama sudah ada)
+      if (error.message === "DUPLICATE_DATA") {
+        toast.error("Gagal Simpan!", {
+          description:
+            "Kode atau Nama Kriteria sudah ada. Silakan gunakan identitas lain.",
+          duration: 5000,
+        });
+      }
+      // B. Error Validasi Bobot (Total > 1)
+      else if (error.message === "WEIGHT_EXCEEDED") {
+        toast.error("Bobot Terlalu Besar!", {
+          description:
+            "Total seluruh bobot kriteria tidak boleh melebihi 1.0 (100%). Kurangi bobot kriteria lain dulu!",
+          duration: 6000,
+        });
+      }
+      // C. Error Umum lainnya
+      else {
+        toast.error("Error Sistem", {
+          description:
+            "Terjadi kesalahan saat menyimpan data. Coba lagi nanti.",
+        });
+      }
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   return (
@@ -56,7 +93,7 @@ export default function ModalTambahKriteria() {
                       name="kode"
                       placeholder="Misal: C7"
                       required
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 text-gray-800"
                     />
                   </div>
                   <div>
@@ -65,11 +102,11 @@ export default function ModalTambahKriteria() {
                     </label>
                     <input
                       type="number"
-                      step="0.01"
+                      step="0.0001" // Mendukung input desimal 4 angka belakang koma
                       name="bobot"
                       placeholder="Misal: 0.15"
                       required
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 text-gray-800"
                     />
                   </div>
                 </div>
@@ -83,7 +120,7 @@ export default function ModalTambahKriteria() {
                     name="nama"
                     placeholder="Contoh: Kecepatan Respon"
                     required
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 text-gray-800"
                   />
                 </div>
 
@@ -94,7 +131,7 @@ export default function ModalTambahKriteria() {
                   <select
                     name="tipe"
                     required
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 bg-white"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 bg-white text-gray-800"
                   >
                     <option value="benefit">
                       Benefit (Makin tinggi makin bagus)
