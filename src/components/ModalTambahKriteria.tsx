@@ -8,44 +8,40 @@ export default function ModalTambahKriteria() {
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  // Fungsi pembungkus dengan penanganan error
+  // Fungsi pembungkus dengan penanganan error sesuai instruksi Bos
   async function handleSubmit(formData: FormData) {
     setIsLoading(true);
 
+    // 1. Logika Jika Kosong (Client-side Validation)
+    const kode = formData.get("kode");
+    const nama = formData.get("nama");
+    const bobot = formData.get("bobot");
+
+    if (!kode || !nama || !bobot) {
+      toast.error("Semua field kriteria wajib diisi.");
+      setIsLoading(false);
+      return;
+    }
+
     try {
-      // 1. Jalankan proses simpan kriteria (Sekarang ada validasi total bobot di dalamnya)
+      // 2. Jalankan proses simpan kriteria
       await tambahKriteria(formData);
 
-      // 2. Jika sukses, beri feedback hijau
-      toast.success("Kriteria Ditambahkan!", {
-        description: "Data kriteria baru telah berhasil disimpan ke sistem.",
-      });
-      setIsOpen(false); // Tutup modal otomatis hanya setelah berhasil disimpan
+      // Jika sukses
+      toast.success("Kriteria Berhasil Ditambahkan!");
+      setIsOpen(false); // Tutup modal otomatis
     } catch (error: any) {
-      // 3. TANGKAP ERROR SPESIFIK DARI SERVER ACTION
-
-      // A. Error Duplikasi (Kode/Nama sudah ada)
+      // 3. Logika Jika Duplikat
       if (error.message === "DUPLICATE_DATA") {
-        toast.error("Gagal Simpan!", {
-          description:
-            "Kode atau Nama Kriteria sudah ada. Silakan gunakan identitas lain.",
-          duration: 5000,
-        });
+        toast.error("Kriteria sudah ada. Gunakan kode atau nama yang berbeda.");
       }
-      // B. Error Validasi Bobot (Total > 1)
+      // 4. Logika Jika Bobot Salah (Lebih dari 1)
       else if (error.message === "WEIGHT_EXCEEDED") {
-        toast.error("Bobot Terlalu Besar!", {
-          description:
-            "Total seluruh bobot kriteria tidak boleh melebihi 1.0 (100%). Kurangi bobot kriteria lain dulu!",
-          duration: 6000,
-        });
+        toast.error("Total bobot kriteria tidak boleh melebihi 1.");
       }
-      // C. Error Umum lainnya
+      // Error Umum
       else {
-        toast.error("Error Sistem", {
-          description:
-            "Terjadi kesalahan saat menyimpan data. Coba lagi nanti.",
-        });
+        toast.error("Terjadi kesalahan sistem saat menyimpan data.");
       }
     } finally {
       setIsLoading(false);
@@ -54,7 +50,6 @@ export default function ModalTambahKriteria() {
 
   return (
     <>
-      {/* Tombol Pemicu Modal */}
       <button
         onClick={() => setIsOpen(true)}
         className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium transition-colors shadow-sm"
@@ -62,12 +57,9 @@ export default function ModalTambahKriteria() {
         + Tambah Kriteria
       </button>
 
-      {/* Latar Belakang Modal (Overlay) */}
       {isOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
-          {/* Kotak Modal */}
           <div className="bg-white rounded-xl shadow-2xl w-full max-w-md overflow-hidden animate-in fade-in zoom-in duration-200">
-            {/* Header Modal */}
             <div className="px-6 py-4 border-b border-gray-100 flex justify-between items-center bg-gray-50">
               <h3 className="text-lg font-bold text-gray-800">
                 Tambah Kriteria
@@ -80,7 +72,6 @@ export default function ModalTambahKriteria() {
               </button>
             </div>
 
-            {/* Form Input */}
             <div className="p-6">
               <form action={handleSubmit} className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
@@ -92,7 +83,6 @@ export default function ModalTambahKriteria() {
                       type="text"
                       name="kode"
                       placeholder="Misal: C7"
-                      required
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 text-gray-800"
                     />
                   </div>
@@ -102,10 +92,9 @@ export default function ModalTambahKriteria() {
                     </label>
                     <input
                       type="number"
-                      step="0.0001" // Mendukung input desimal 4 angka belakang koma
+                      step="0.0001"
                       name="bobot"
                       placeholder="Misal: 0.15"
-                      required
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 text-gray-800"
                     />
                   </div>
@@ -119,7 +108,6 @@ export default function ModalTambahKriteria() {
                     type="text"
                     name="nama"
                     placeholder="Contoh: Kecepatan Respon"
-                    required
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 text-gray-800"
                   />
                 </div>
@@ -130,7 +118,6 @@ export default function ModalTambahKriteria() {
                   </label>
                   <select
                     name="tipe"
-                    required
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 bg-white text-gray-800"
                   >
                     <option value="benefit">
