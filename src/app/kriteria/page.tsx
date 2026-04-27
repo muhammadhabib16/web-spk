@@ -102,7 +102,11 @@ export default async function KriteriaPage() {
                     <div className="flex items-center justify-center gap-1 opacity-80 group-hover:opacity-100 transition-opacity">
                       <ModalEditKriteria kriteria={item} />
 
-                      <form action={hapusKriteria}>
+                      <form
+                        action={async (formData) => {
+                          await hapusKriteria(formData);
+                        }}
+                      >
                         <input type="hidden" name="id" value={item.id} />
                         <DeleteButton />
                       </form>
