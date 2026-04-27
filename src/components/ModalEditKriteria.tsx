@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { editKriteria } from "@/actions/kriteriaActions";
+import { toast } from "sonner"; // Tambahkan import toast agar tidak error
 
 // Mendefinisikan bentuk data yang diterima modal
 type Kriteria = {
@@ -22,9 +23,35 @@ export default function ModalEditKriteria({
 
   async function handleSubmit(formData: FormData) {
     setIsLoading(true);
-    await editKriteria(formData);
-    setIsLoading(false);
-    setIsOpen(false);
+
+    try {
+      const result = await editKriteria(formData);
+
+      if (result && !result.success) {
+        // 1. Penanganan Error Bobot Melebihi 1
+        if (result.error === "WEIGHT_EXCEEDED") {
+          toast.error("Total bobot yang dimasukan melebihi 1");
+        }
+        // 2. Penanganan Error Duplikat (Update sesuai permintaan Bos)
+        else if (result.error === "DUPLICATE_DATA") {
+          toast.error(
+            "Kriteria yang dimasukan sudah ada. Gunakan kode atau nama yang berbeda.",
+          );
+        } else {
+          toast.error("Gagal memperbarui data.");
+        }
+
+        setIsLoading(false);
+        return;
+      }
+
+      toast.success("Kriteria Berhasil Diperbarui!");
+      setIsOpen(false);
+    } catch (error) {
+      toast.error("Terjadi kesalahan sistem.");
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   return (
@@ -65,7 +92,7 @@ export default function ModalEditKriteria({
                       name="kode"
                       defaultValue={kriteria.kode}
                       required
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 text-gray-800"
                     />
                   </div>
                   <div>
@@ -74,11 +101,11 @@ export default function ModalEditKriteria({
                     </label>
                     <input
                       type="number"
-                      step="0.01"
+                      step="0.0001"
                       name="bobot"
                       defaultValue={kriteria.bobot}
                       required
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 text-gray-800"
                     />
                   </div>
                 </div>
@@ -92,7 +119,7 @@ export default function ModalEditKriteria({
                     name="nama"
                     defaultValue={kriteria.nama}
                     required
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 text-gray-800"
                   />
                 </div>
 
@@ -104,7 +131,7 @@ export default function ModalEditKriteria({
                     name="tipe"
                     defaultValue={kriteria.tipe}
                     required
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 bg-white"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 bg-white text-gray-800"
                   >
                     <option value="benefit">
                       Benefit (Makin tinggi makin bagus)

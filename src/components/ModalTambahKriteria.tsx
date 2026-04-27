@@ -25,24 +25,36 @@ export default function ModalTambahKriteria() {
 
     try {
       // 2. Jalankan proses simpan kriteria
-      await tambahKriteria(formData);
+      // Kita tangkap balikan (return) dari server action
+      const result = await tambahKriteria(formData);
 
-      // Jika sukses
+      // 3. Cek apakah proses berhasil atau ada error spesifik
+      if (result && !result.success) {
+        // A. Logika Jika Duplikat
+        if (result.error === "DUPLICATE_DATA") {
+          toast.error(
+            "Kriteria sudah ada. Gunakan kode atau nama yang berbeda.",
+          );
+        }
+        // B. Logika Jika Bobot Salah (Lebih dari 1)
+        else if (result.error === "WEIGHT_EXCEEDED") {
+          toast.error("Total bobot kriteria tidak boleh melebihi 1.");
+        }
+        // C. Error lainnya dari server
+        else {
+          toast.error("Terjadi kesalahan sistem saat menyimpan data.");
+        }
+
+        setIsLoading(false);
+        return; // Berhenti di sini, jangan tutup modal
+      }
+
+      // 4. Jika Sukses Total
       toast.success("Kriteria Berhasil Ditambahkan!");
       setIsOpen(false); // Tutup modal otomatis
     } catch (error: any) {
-      // 3. Logika Jika Duplikat
-      if (error.message === "DUPLICATE_DATA") {
-        toast.error("Kriteria sudah ada. Gunakan kode atau nama yang berbeda.");
-      }
-      // 4. Logika Jika Bobot Salah (Lebih dari 1)
-      else if (error.message === "WEIGHT_EXCEEDED") {
-        toast.error("Total bobot kriteria tidak boleh melebihi 1.");
-      }
-      // Error Umum
-      else {
-        toast.error("Terjadi kesalahan sistem saat menyimpan data.");
-      }
+      // Ini hanya untuk jaga-jaga jika koneksi putus atau fatal error
+      toast.error("Terjadi kesalahan koneksi ke server.");
     } finally {
       setIsLoading(false);
     }

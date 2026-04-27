@@ -5,27 +5,26 @@ import { revalidatePath } from "next/cache";
 
 /**
  * Fungsi pembantu untuk mengecek total bobot di database
- * Alasan: Reusable untuk fungsi Tambah dan Edit
+ * Alasan: Menghitung total bobot kriteria agar tidak melebihi 1 (100%)
  */
 async function checkTotalWeight(currentId: number | null, newWeight: number) {
-  // Ambil semua data kriteria yang ada
   const { data: existingKriteria } = await supabase
     .from("kriteria")
     .select("id, bobot");
 
-  if (!existingKriteria) return;
+  if (!existingKriteria) return true; // Asumsikan valid jika gagal fetch
 
-  // Hitung total bobot kriteria lain (kecuali kriteria yang sedang diedit)
   const otherWeightsTotal = existingKriteria
-    .filter((k) => k.id !== currentId) // Jika Tambah, currentId null. Jika Edit, skip ID sendiri.
+    .filter((k) => k.id !== currentId)
     .reduce((sum, k) => sum + parseFloat(k.bobot), 0);
 
   const totalFutureWeight = otherWeightsTotal + newWeight;
 
-  // Toleransi 0.0001 untuk mengatasi masalah presisi floating point JavaScript
+  // Toleransi floating point JavaScript (0.0001)
   if (totalFutureWeight > 1.0001) {
-    throw new Error("WEIGHT_EXCEEDED");
+    return false;
   }
+  return true;
 }
 
 // 1. Fungsi Tambah Data
@@ -36,22 +35,27 @@ export async function tambahKriteria(formData: FormData) {
   const bobot = parseFloat(formData.get("bobot") as string);
 
   try {
-    // Jalankan validasi bobot (currentId null karena data baru)
-    await checkTotalWeight(null, bobot);
+    // Validasi Bobot
+    const isWeightValid = await checkTotalWeight(null, bobot);
+    if (!isWeightValid) {
+      return { success: false, error: "WEIGHT_EXCEEDED" };
+    }
 
     const { error } = await supabase
       .from("kriteria")
       .insert([{ kode, nama, tipe, bobot }]);
 
     if (error) {
-      if (error.code === "23505") throw new Error("DUPLICATE_DATA");
-      throw new Error(error.message);
+      // Menangkap error duplikasi (Unique Constraint) dari database
+      if (error.code === "23505")
+        return { success: false, error: "DUPLICATE_DATA" };
+      return { success: false, error: error.message };
     }
 
     revalidatePath("/kriteria");
+    return { success: true };
   } catch (err: any) {
-    // Lempar kembali error spesifik agar ditangkap UI
-    throw new Error(err.message);
+    return { success: false, error: "SERVER_ERROR" };
   }
 }
 
@@ -63,10 +67,11 @@ export async function hapusKriteria(formData: FormData) {
 
   if (error) {
     console.error("Gagal hapus:", error.message);
-    throw new Error("Gagal menghapus data kriteria");
+    return { success: false, error: "Gagal menghapus data" };
   }
 
   revalidatePath("/kriteria");
+  return { success: true };
 }
 
 // 3. Fungsi Edit Data
@@ -78,21 +83,30 @@ export async function editKriteria(formData: FormData) {
   const bobot = parseFloat(formData.get("bobot") as string);
 
   try {
-    // Jalankan validasi bobot (masukkan ID saat ini agar bobot lama tidak ikut dihitung)
-    await checkTotalWeight(id, bobot);
+    // 1. Jalankan validasi bobot (masukkan ID saat ini agar bobot lama di-skip)
+    const isWeightValid = await checkTotalWeight(id, bobot);
 
+    if (!isWeightValid) {
+      return { success: false, error: "WEIGHT_EXCEEDED" };
+    }
+
+    // 2. Update data ke database
     const { error } = await supabase
       .from("kriteria")
       .update({ kode, nama, tipe, bobot })
       .eq("id", id);
 
     if (error) {
-      if (error.code === "23505") throw new Error("DUPLICATE_DATA");
-      throw new Error(error.message);
+      // 3. CEK DUPLIKASI SAAT EDIT
+      // Jika user mengubah Kode/Nama ke nilai yang sudah dipakai kriteria lain
+      if (error.code === "23505")
+        return { success: false, error: "DUPLICATE_DATA" };
+      return { success: false, error: error.message };
     }
 
     revalidatePath("/kriteria");
+    return { success: true };
   } catch (err: any) {
-    throw new Error(err.message);
+    return { success: false, error: "SERVER_ERROR" };
   }
 }
