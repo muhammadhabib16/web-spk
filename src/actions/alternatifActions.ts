@@ -11,15 +11,12 @@ export async function tambahAlternatif(formData: FormData) {
   const { error } = await supabase.from("alternatif").insert([{ kode, nama }]);
 
   if (error) {
-    console.error("Gagal tambah alternatif:", error.message);
-    // --- PENGECEKAN DUPLIKAT DI SINI BOS ---
-    if (error.code === "23505") {
-      throw new Error("DUPLICATE_DATA");
-    }
-    throw new Error("Gagal menyimpan data alternatif");
+    // Kembalikan kode errornya langsung
+    return { success: false, errorCode: error.code, message: error.message };
   }
 
   revalidatePath("/alternatif");
+  return { success: true };
 }
 
 // Fungsi Hapus Alternatif

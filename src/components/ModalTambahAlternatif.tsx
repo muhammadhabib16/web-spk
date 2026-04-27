@@ -11,35 +11,32 @@ export default function ModalTambahAlternatif() {
   async function handleSubmit(formData: FormData) {
     setIsLoading(true);
 
-    // 1. Logika Jika Kosong (Client-side Validation)
+    // Validasi Kosong tetap sama
     const kode = formData.get("kode");
     const nama = formData.get("nama");
-
     if (!kode || !nama) {
       toast.error("Data alternatif belum lengkap.");
       setIsLoading(false);
       return;
     }
 
-    try {
-      // 2. Jalankan proses simpan
-      await tambahAlternatif(formData);
+    // 1. Ambil hasil result dari action
+    const result = await tambahAlternatif(formData);
 
-      // Jika sukses
-      toast.success("Alternatif Berhasil Ditambahkan!");
-      setIsOpen(false); // Tutup modal hanya jika berhasil
-    } catch (error: any) {
-      // 3. Logika Jika Duplikat
-      if (error.message === "DUPLICATE_DATA") {
+    if (!result.success) {
+      // 2. Cek kode error 23505 (Unique Violation)
+      if (result.errorCode === "23505") {
         toast.error("Alternatif sudah terdaftar.");
-      }
-      // Error Umum lainnya
-      else {
+      } else {
         toast.error("Terjadi kesalahan pada server.");
       }
-    } finally {
-      setIsLoading(false);
+    } else {
+      // 3. Jika Berhasil
+      toast.success("Alternatif Berhasil Ditambahkan!");
+      setIsOpen(false);
     }
+
+    setIsLoading(false);
   }
 
   return (
