@@ -206,7 +206,7 @@ export default function Sidebar() {
           </div>
           <div>
             <p className="text-sm font-bold text-gray-800 leading-tight">
-              Admin SPK
+              Admin EcomRank
             </p>
             <p className="text-xs text-gray-500">Super Admin</p>
           </div>

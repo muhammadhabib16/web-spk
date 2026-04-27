@@ -21,6 +21,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="id">
+      <head>
+        <title>EcomRank</title>
+      </head>
       <body className={inter.className}>
         <Suspense fallback={null}>
           <PageLoader />

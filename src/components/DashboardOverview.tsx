@@ -62,7 +62,8 @@ export default function DashboardOverview({
             Dashboard Overview
           </span>
           <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 tracking-tight mb-2">
-            Selamat Datang, <span className="text-blue-600">Admin SPK!</span>
+            Selamat Datang,{" "}
+            <span className="text-blue-600">Admin EcomRank!</span>
           </h1>
           <p className="text-gray-500 text-sm sm:text-base">
             Berikut adalah ringkasan operasional sistem penunjang keputusan
