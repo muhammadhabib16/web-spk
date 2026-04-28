@@ -20,23 +20,29 @@ export default function ModalTambahAlternatif() {
       return;
     }
 
-    // 1. Ambil hasil result dari action
-    const result = await tambahAlternatif(formData);
+    try {
+      // 1. Ambil hasil result dari action
+      const result = await tambahAlternatif(formData);
 
-    if (!result.success) {
-      // 2. Cek kode error 23505 (Unique Violation)
-      if (result.errorCode === "23505") {
-        toast.error("Alternatif sudah terdaftar.");
-      } else {
-        toast.error("Terjadi kesalahan pada server.");
+      if (!result.success) {
+        // PERBAIKAN: Cek properti 'error' (bukan errorCode) sesuai return dari action
+        if (result.error === "DUPLICATE_DATA") {
+          toast.error("Alternatif sudah terdaftar.");
+        } else {
+          toast.error(result.error || "Terjadi kesalahan pada server.");
+        }
+        setIsLoading(false);
+        return; // Berhenti agar modal tidak tertutup
       }
-    } else {
-      // 3. Jika Berhasil
+
+      // 2. Jika Berhasil
       toast.success("Alternatif Berhasil Ditambahkan!");
       setIsOpen(false);
+    } catch (error) {
+      toast.error("Terjadi kesalahan sistem.");
+    } finally {
+      setIsLoading(false);
     }
-
-    setIsLoading(false);
   }
 
   return (
