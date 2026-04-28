@@ -67,7 +67,7 @@ export default async function AlternatifPage() {
                     <div className="flex items-center justify-center gap-1 opacity-80 group-hover:opacity-100 transition-opacity">
                       <ModalEditAlternatif alternatif={item} />
 
-                      <form action={hapusAlternatif}>
+                      <form action={hapusAlternatif as unknown as any}>
                         <input type="hidden" name="id" value={item.id} />
                         <button
                           type="submit"
