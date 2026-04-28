@@ -9,6 +9,7 @@ EcomRank adalah aplikasi berbasis web yang dirancang untuk membantu menentukan p
 - **Matriks Penilaian**: Input nilai setiap alternatif dengan presisi hingga 4 desimal.
 - **Visual Rangking**: Hasil peringkat otomatis dengan badge khusus untuk Juara 1, 2, dan 3.
 - **Database Terintegrasi**: Menggunakan PostgreSQL (Supabase/pgAdmin).
+- **Export Excel**
 
 ## 🛠️ Tech Stack
 
@@ -28,6 +29,6 @@ Sebelum memulai, pastikan Anda sudah menginstal:
 
 1. **Clone Repository**
    ```bash
-   git clone [https://github.com/username/ecomrank.git](https://github.com/username/ecomrank.git)
+   git clone https://github.com/muhammadhabib16/web-spk.git
    cd ecomrank
    ```

@@ -3,56 +3,74 @@
 import { supabase } from "@/lib/supabase";
 import { revalidatePath } from "next/cache";
 
-// Fungsi Tambah Alternatif
+// 1. Fungsi Tambah Alternatif
 export async function tambahAlternatif(formData: FormData) {
   const kode = formData.get("kode") as string;
   const nama = formData.get("nama") as string;
 
-  const { error } = await supabase.from("alternatif").insert([{ kode, nama }]);
+  try {
+    const { error } = await supabase
+      .from("alternatif")
+      .insert([{ kode, nama }]);
 
-  if (error) {
-    // Kembalikan kode errornya langsung
-    return { success: false, errorCode: error.code, message: error.message };
+    if (error) {
+      // Menangkap error duplikasi (23505)
+      if (error.code === "23505")
+        return { success: false, error: "DUPLICATE_DATA" };
+      return { success: false, error: error.message };
+    }
+
+    revalidatePath("/alternatif");
+    return { success: true };
+  } catch (err) {
+    return { success: false, error: "SERVER_ERROR" };
   }
-
-  revalidatePath("/alternatif");
-  return { success: true };
 }
 
-// Fungsi Hapus Alternatif
+// 2. Fungsi Hapus Alternatif
 export async function hapusAlternatif(formData: FormData) {
   const id = parseInt(formData.get("id") as string);
 
-  const { error } = await supabase.from("alternatif").delete().eq("id", id);
+  try {
+    const { error } = await supabase.from("alternatif").delete().eq("id", id);
 
-  if (error) {
-    console.error("Gagal hapus alternatif:", error.message);
-    throw new Error("Gagal menghapus data alternatif");
+    if (error) {
+      console.error("Gagal hapus alternatif:", error.message);
+      return { success: false, error: "Gagal menghapus data" };
+    }
+
+    revalidatePath("/alternatif");
+    return { success: true };
+  } catch (err) {
+    return { success: false, error: "SERVER_ERROR" };
   }
-
-  revalidatePath("/alternatif");
 }
 
-// Fungsi Edit Alternatif
+// 3. Fungsi Edit Alternatif
 export async function editAlternatif(formData: FormData) {
   const id = parseInt(formData.get("id") as string);
   const kode = formData.get("kode") as string;
   const nama = formData.get("nama") as string;
 
-  const { error } = await supabase
-    .from("alternatif")
-    .update({ kode, nama })
-    .eq("id", id);
+  try {
+    const { error } = await supabase
+      .from("alternatif")
+      .update({ kode, nama })
+      .eq("id", id);
 
-  if (error) {
-    console.error("Gagal update alternatif:", error.message);
-    // --- PENGECEKAN DUPLIKAT SAAT EDIT JUGA PENTING ---
-    if (error.code === "23505") {
-      throw new Error("DUPLICATE_DATA");
+    if (error) {
+      console.error("Gagal update alternatif:", error.message);
+
+      // --- PENGECEKAN DUPLIKAT SAAT EDIT ---
+      if (error.code === "23505") {
+        return { success: false, error: "DUPLICATE_DATA" };
+      }
+      return { success: false, error: "Gagal memperbarui data alternatif" };
     }
-    throw new Error("Gagal memperbarui data alternatif");
-  }
 
-  // Segarkan data di halaman alternatif
-  revalidatePath("/alternatif");
+    revalidatePath("/alternatif");
+    return { success: true };
+  } catch (err) {
+    return { success: false, error: "SERVER_ERROR" };
+  }
 }

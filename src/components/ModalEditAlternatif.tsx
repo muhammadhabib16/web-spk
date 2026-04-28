@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { editAlternatif } from "@/actions/alternatifActions";
+import { toast } from "sonner"; // Tambahkan import toast agar pesan muncul
 
 type Alternatif = {
   id: number;
@@ -19,9 +20,31 @@ export default function ModalEditAlternatif({
 
   async function handleSubmit(formData: FormData) {
     setIsLoading(true);
-    await editAlternatif(formData);
-    setIsLoading(false);
-    setIsOpen(false);
+
+    try {
+      // Tangkap hasil dari server action
+      const result = await editAlternatif(formData);
+
+      if (result && !result.success) {
+        // Handle Error Duplikat
+        if (result.error === "DUPLICATE_DATA") {
+          toast.error(
+            "Alternatif sudah ada. Gunakan kode atau nama yang berbeda.",
+          );
+        } else {
+          toast.error(result.error || "Gagal memperbarui data.");
+        }
+        setIsLoading(false);
+        return; // Berhenti di sini agar modal tetap terbuka
+      }
+
+      toast.success("Alternatif berhasil diperbarui!");
+      setIsOpen(false);
+    } catch (error) {
+      toast.error("Terjadi kesalahan sistem.");
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   return (
@@ -61,7 +84,7 @@ export default function ModalEditAlternatif({
                     name="kode"
                     defaultValue={alternatif.kode}
                     required
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 text-gray-800"
                   />
                 </div>
 
@@ -74,7 +97,7 @@ export default function ModalEditAlternatif({
                     name="nama"
                     defaultValue={alternatif.nama}
                     required
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 text-gray-800"
                   />
                 </div>
 
