@@ -19,7 +19,7 @@ export default async function PenilaianPage() {
       {/* Header Premium */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
         <div>
-          <h1 className="text-3xl font-black text-gray-900 tracking-tight">
+          <h1 className="text-3xl font-black text-blue-600 tracking-tight">
             Matriks Keputusan
           </h1>
           <p className="text-gray-500 mt-1.5 text-sm font-medium">

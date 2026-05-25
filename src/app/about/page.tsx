@@ -66,7 +66,7 @@ export default function AboutPage() {
           <span className="inline-block py-1 px-3 rounded-full bg-white border border-gray-200 text-gray-500 text-xs font-semibold tracking-wider uppercase mb-5 shadow-sm">
             Tentang Aplikasi
           </span>
-          <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4 tracking-tight">
+          <h1 className="text-3xl sm:text-4xl font-bold text-blue-600 mb-4 tracking-tight">
             Sistem Penunjang Keputusan{" "}
             <span className="text-blue-600">SAW</span>
           </h1>
@@ -87,7 +87,7 @@ export default function AboutPage() {
             transition={{ delay: 0.2, duration: 0.5 }}
             className="text-center mb-10"
           >
-            <h2 className="text-xl font-bold text-gray-800">Tim Pengembang</h2>
+            <h2 className="text-xl font-bold text-blue-300">Tim Pengembang</h2>
             <div className="w-12 h-1 bg-blue-600 mx-auto mt-3 rounded-full opacity-80"></div>
           </motion.div>
 
