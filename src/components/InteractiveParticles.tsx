@@ -34,13 +34,13 @@ export default function InteractiveParticles() {
         },
       },
       particles: {
-        color: { value: "#3b82f6" }, // Warna Biru
+        color: { value: "#00b3ff" }, // Warna Biru Terang Persona
         links: {
-          color: "#3b82f6",
+          color: "#004de6", // Warna Biru Gelap
           distance: 150,
           enable: true,
-          opacity: 0.2,
-          width: 1,
+          opacity: 0.4,
+          width: 1.5,
         },
         move: {
           enable: true,

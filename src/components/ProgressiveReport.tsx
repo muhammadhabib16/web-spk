@@ -93,7 +93,7 @@ export default function ProgressiveReport({
           </span>
           Real-Time Analysis
         </div>
-        <h1 className="text-4xl font-black text-gray-900 tracking-tight">
+        <h1 className="text-4xl font-black text-blue-700 tracking-tight">
           Laporan Hasil Keputusan
         </h1>
         <p className="text-gray-500 mt-2 text-lg font-medium max-w-2xl">
@@ -115,7 +115,7 @@ export default function ProgressiveReport({
               <div className="w-8 h-8 rounded-lg bg-white border border-gray-200 shadow-sm flex items-center justify-center text-gray-800 font-black text-sm">
                 1
               </div>
-              <h2 className="text-xl font-bold text-gray-800 tracking-tight">
+              <h2 className="text-xl font-bold text-blue-300 tracking-tight">
                 Matriks Keputusan Awal (X)
               </h2>
             </div>
@@ -200,7 +200,7 @@ export default function ProgressiveReport({
                 2
               </div>
               <div>
-                <h2 className="text-xl font-bold text-gray-800 tracking-tight">
+                <h2 className="text-xl font-bold text-blue-300 tracking-tight">
                   Matriks Normalisasi (R)
                 </h2>
                 <p className="text-xs text-gray-500 mt-0.5 font-medium">
@@ -275,7 +275,7 @@ export default function ProgressiveReport({
               <div className="w-8 h-8 rounded-lg bg-emerald-50 border border-emerald-100 flex items-center justify-center text-emerald-700 font-black text-sm">
                 3
               </div>
-              <h2 className="text-2xl font-black text-gray-900 tracking-tight">
+              <h2 className="text-2xl font-black text-blue-300 tracking-tight">
                 Puncak Klasemen Leaderboard
               </h2>
             </div>

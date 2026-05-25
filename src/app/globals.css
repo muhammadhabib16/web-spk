@@ -1,8 +1,13 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Persona 3/5 Dark Theme Vibe */
+  --background: #0a0a0c;
+  --foreground: #ffffff;
+  --persona-blue: #004de6;
+  --persona-blue-dark: #002b80;
+  --persona-black: #121212;
+  --persona-accent: #00b3ff;
 }
 
 @theme inline {
@@ -12,50 +17,71 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Inter', Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
+}
+
+/* Persona Motif Background Grid */
+.bg-persona-grid {
+  background-image: linear-gradient(rgba(0, 77, 230, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 77, 230, 0.1) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* Persona Diagonal Stripes */
+.bg-persona-stripes {
+  background: repeating-linear-gradient(
+    45deg,
+    #0a0a0c,
+    #0a0a0c 10px,
+    #121214 10px,
+    #121214 20px
+  );
 }
 
 @layer utilities {
-  @keyframes softGradient {
+  @keyframes slideDiagonal {
     0% {
-      background-position: 0% 50%;
-    }
-    50% {
-      background-position: 100% 50%;
+      background-position: 0 0;
     }
     100% {
-      background-position: 0% 50%;
+      background-position: 40px 40px;
     }
   }
 
+  .animate-slide-diagonal {
+    animation: slideDiagonal 2s linear infinite;
+  }
+
+  /* Clip paths for sharp angled cards */
+  .clip-persona-card {
+    clip-path: polygon(0 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%);
+  }
+
+  .clip-persona-button {
+    clip-path: polygon(10px 0, 100% 0, calc(100% - 10px) 100%, 0 100%);
+  }
+  
+  .clip-persona-tag {
+    clip-path: polygon(10px 0, 100% 0, 100% 100%, 0 100%);
+  }
+
+  /* Keep original animations just in case components still use them */
   @keyframes floatParticles {
-    0% {
-      transform: translateY(0px) translateX(0px);
-    }
-    50% {
-      transform: translateY(-20px) translateX(10px);
-    }
-    100% {
-      transform: translateY(0px) translateX(0px);
-    }
-  }
-
-  .animate-soft-gradient {
-    background-size: 200% 200%;
-    animation: softGradient 12s ease- some-infinite;
+    0% { transform: translateY(0px) translateX(0px); }
+    50% { transform: translateY(-20px) translateX(10px); }
+    100% { transform: translateY(0px) translateX(0px); }
   }
 
   .animate-float {
     animation: floatParticles 8s ease-in-out infinite;
+  }
+  
+  /* Text Shadow for Persona titles */
+  .text-shadow-persona {
+    text-shadow: 3px 3px 0px rgba(0, 77, 230, 0.8), -1px -1px 0px rgba(255, 255, 255, 0.2);
   }
 }

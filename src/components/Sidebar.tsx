@@ -142,11 +142,11 @@ export default function Sidebar() {
   }
 
   return (
-    <aside className="w-72 bg-white border-r border-gray-100 flex flex-col h-screen shadow-[4px_0_24px_rgba(0,0,0,0.02)]">
+    <aside className="w-72 bg-[#0a0a0c] border-r-4 border-[#004de6] flex flex-col h-screen z-20 relative">
       {/* Brand Logo */}
-      <div className="px-8 py-8">
-        <h2 className="text-2xl font-black text-blue-600 tracking-tighter flex items-center gap-2">
-          <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white">
+      <div className="px-8 py-8 border-b-2 border-[#121212]">
+        <h2 className="text-3xl font-black text-white tracking-tighter flex items-center gap-2 uppercase italic text-shadow-persona">
+          <div className="w-10 h-10 bg-[#004de6] flex items-center justify-center text-white skew-x-[-15deg]">
             {/* ICON DIPERBARUI: Tas Belanja */}
             <svg
               className="w-5 h-5"
@@ -163,7 +163,7 @@ export default function Sidebar() {
               />
             </svg>
           </div>
-          Ecom<span className="text-gray-800">Rank</span>
+          ECOM<span className="text-[#00b3ff]">RANK</span>
         </h2>
       </div>
 
@@ -177,18 +177,18 @@ export default function Sidebar() {
             <Link
               key={item.name}
               href={item.href}
-              className={`flex items-center gap-3 px-4 py-3 rounded-xl font-medium transition-all duration-200 group ${
+              className={`flex items-center gap-3 px-4 py-3 font-black uppercase tracking-widest transition-all duration-200 group clip-persona-tag ${
                 isActive
-                  ? "bg-blue-600 text-white shadow-md shadow-blue-200/50 translate-x-1"
-                  : "text-gray-500 hover:bg-gray-50 hover:text-blue-600 hover:translate-x-1"
+                  ? "bg-[#004de6] text-white translate-x-2 skew-x-[-5deg] border-l-4 border-white"
+                  : "text-gray-400 hover:bg-[#121212] hover:text-[#00b3ff] hover:translate-x-2 hover:skew-x-[-5deg] border-l-4 border-transparent hover:border-[#00b3ff]"
               }`}
             >
               <div
                 className={`${
                   isActive
                     ? "text-white"
-                    : "text-gray-400 group-hover:text-blue-600"
-                } transition-colors`}
+                    : "text-gray-500 group-hover:text-[#00b3ff]"
+                } transition-colors skew-x-[5deg]`}
               >
                 {item.icon}
               </div>
@@ -199,39 +199,39 @@ export default function Sidebar() {
       </nav>
 
       {/* User Profile & Logout Section */}
-      <div className="p-4 m-4 border border-gray-100 bg-gray-50 rounded-2xl">
+      <div className="p-4 m-4 border-2 border-[#004de6] bg-[#121212] clip-persona-card">
         <div className="flex items-center gap-3 mb-4 px-2">
-          <div className="w-10 h-10 rounded-full bg-blue-100 border-2 border-white shadow-sm flex items-center justify-center text-blue-600 font-bold">
+          <div className="w-10 h-10 bg-[#004de6] border border-white flex items-center justify-center text-white font-black skew-x-[-10deg]">
             AD
           </div>
           <div>
-            <p className="text-sm font-bold text-gray-800 leading-tight">
+            <p className="text-sm font-black text-white leading-tight uppercase">
               Admin EcomRank
             </p>
-            <p className="text-xs text-gray-500">Super Admin</p>
+            <p className="text-xs text-[#00b3ff] font-bold">Super Admin</p>
           </div>
         </div>
 
         <form action={logout}>
           <button
             type="submit"
-            className="w-full py-2.5 px-4 bg-white border border-gray-200 hover:border-red-200 hover:bg-red-50 text-gray-600 hover:text-red-600 font-medium rounded-xl transition-all duration-200 flex items-center justify-center gap-2 text-sm shadow-sm"
+            className="w-full py-2.5 px-4 bg-white hover:bg-[#ff003c] text-black hover:text-white font-black transition-all duration-200 flex items-center justify-center gap-2 text-sm uppercase clip-persona-button skew-x-[-5deg]"
           >
             <svg
-              className="w-4 h-4"
+              className="w-5 h-5 skew-x-[5deg]"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
+                strokeLinecap="square"
+                strokeLinejoin="miter"
+                strokeWidth={2.5}
                 d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
               />
             </svg>
-            Keluar Sistem
+            <span className="skew-x-[5deg]">Keluar Sistem</span>
           </button>
         </form>
       </div>

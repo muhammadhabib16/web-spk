@@ -28,7 +28,7 @@ export default function RootLayout({
         <Toaster position="bottom-right" richColors closeButton />
 
         {/* Latar Belakang Dasar */}
-        <div className="flex h-screen bg-[#F8FAFC] font-sans text-gray-900">
+        <div className="flex h-screen bg-black font-sans text-white bg-persona-stripes">
           <Sidebar />
 
           {/* Tag Main diubah agar bisa menampung partikel dan children dengan rapi */}

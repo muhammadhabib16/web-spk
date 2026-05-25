@@ -55,17 +55,17 @@ export default function DashboardOverview({
       {/* --- HEADER WELCOME --- */}
       <motion.div
         variants={itemVariants}
-        className="bg-white/80 backdrop-blur-xl border border-gray-100 shadow-sm p-6 sm:p-8 rounded-3xl relative overflow-hidden"
+        className="bg-[#121212] border-4 border-[#004de6] shadow-xl p-6 sm:p-8 relative overflow-hidden clip-persona-card group"
       >
         <div className="relative z-10">
-          <span className="inline-block py-1 px-3 rounded-full bg-blue-50 border border-blue-100 text-blue-600 text-[10px] sm:text-xs font-bold tracking-wider uppercase mb-3">
-            Dashboard Overview
+          <span className="inline-block py-1 px-3 bg-[#004de6] text-white text-[10px] sm:text-xs font-black tracking-widest uppercase mb-3 skew-x-[-10deg] clip-persona-tag">
+            <span className="block skew-x-[10deg]">Dashboard Overview</span>
           </span>
-          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 tracking-tight mb-2">
+          <h1 className="text-2xl sm:text-4xl font-black text-white tracking-tighter mb-2 uppercase italic text-shadow-persona">
             Selamat Datang,{" "}
-            <span className="text-blue-600">Admin EcomRank!</span>
+            <span className="text-[#00b3ff]">Admin EcomRank!</span>
           </h1>
-          <p className="text-gray-500 text-sm sm:text-base">
+          <p className="text-gray-400 text-sm sm:text-base font-bold">
             Berikut adalah ringkasan operasional sistem penunjang keputusan
             E-Commerce Fashion.
           </p>
@@ -87,11 +87,11 @@ export default function DashboardOverview({
         {/* Card Total Alternatif */}
         <motion.div
           variants={itemVariants}
-          className="bg-white border border-gray-100 p-5 sm:p-6 rounded-3xl shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-400 flex items-center gap-5 group"
+          className="bg-[#121212] border-2 border-[#00b3ff] p-5 sm:p-6 shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-400 flex items-center gap-5 group clip-persona-card"
         >
-          <div className="w-14 h-14 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center group-hover:scale-110 group-hover:bg-blue-600 group-hover:text-white transition-all duration-400">
+          <div className="w-14 h-14 bg-[#004de6] text-white flex items-center justify-center group-hover:scale-110 group-hover:bg-white group-hover:text-[#004de6] transition-all duration-400 skew-x-[-10deg] border border-white">
             <svg
-              className="w-6 h-6 sm:w-7 sm:h-7"
+              className="w-6 h-6 sm:w-7 sm:h-7 skew-x-[10deg]"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -99,19 +99,19 @@ export default function DashboardOverview({
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                strokeWidth={2}
+                strokeWidth={2.5}
                 d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
               />
             </svg>
           </div>
           <div>
-            <p className="text-[10px] sm:text-xs font-bold text-gray-400 uppercase tracking-widest mb-0.5">
+            <p className="text-[10px] sm:text-xs font-black text-gray-400 uppercase tracking-widest mb-0.5">
               Total Alternatif
             </p>
-            <p className="text-3xl sm:text-4xl font-black text-gray-800">
+            <p className="text-3xl sm:text-4xl font-black text-white italic">
               {alternatif.length}{" "}
-              <span className="text-sm font-semibold text-gray-400">
-                Platform
+              <span className="text-sm font-black text-[#00b3ff]">
+                PLATFORM
               </span>
             </p>
           </div>
@@ -120,11 +120,11 @@ export default function DashboardOverview({
         {/* Card Total Kriteria */}
         <motion.div
           variants={itemVariants}
-          className="bg-white border border-gray-100 p-5 sm:p-6 rounded-3xl shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-400 flex items-center gap-5 group"
+          className="bg-[#121212] border-2 border-[#00b3ff] p-5 sm:p-6 shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-400 flex items-center gap-5 group clip-persona-card"
         >
-          <div className="w-14 h-14 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center group-hover:scale-110 group-hover:bg-indigo-600 group-hover:text-white transition-all duration-400">
+          <div className="w-14 h-14 bg-[#00b3ff] text-[#121212] flex items-center justify-center group-hover:scale-110 group-hover:bg-white transition-all duration-400 skew-x-[-10deg] border border-white">
             <svg
-              className="w-6 h-6 sm:w-7 sm:h-7"
+              className="w-6 h-6 sm:w-7 sm:h-7 skew-x-[10deg]"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -132,19 +132,19 @@ export default function DashboardOverview({
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                strokeWidth={2}
+                strokeWidth={2.5}
                 d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
               />
             </svg>
           </div>
           <div>
-            <p className="text-[10px] sm:text-xs font-bold text-gray-400 uppercase tracking-widest mb-0.5">
+            <p className="text-[10px] sm:text-xs font-black text-gray-400 uppercase tracking-widest mb-0.5">
               Total Kriteria
             </p>
-            <p className="text-3xl sm:text-4xl font-black text-gray-800">
+            <p className="text-3xl sm:text-4xl font-black text-white italic">
               {kriteria.length}{" "}
-              <span className="text-sm font-semibold text-gray-400">
-                Indikator
+              <span className="text-sm font-black text-[#00b3ff]">
+                INDIKATOR
               </span>
             </p>
           </div>
@@ -154,21 +154,21 @@ export default function DashboardOverview({
       {/* --- RINGKASAN KRITERIA & BOBOT --- */}
       <motion.div
         variants={itemVariants}
-        className="bg-white border border-gray-100 rounded-3xl shadow-sm hover:shadow-lg transition-shadow duration-400 overflow-hidden"
+        className="bg-[#121212] border-4 border-[#00b3ff] shadow-sm hover:shadow-[8px_8px_0_rgba(0,179,255,0.2)] transition-shadow duration-400 overflow-hidden clip-persona-card relative"
       >
-        <div className="px-6 py-5 border-b border-gray-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white/50">
+        <div className="px-6 py-5 border-b-4 border-[#00b3ff] flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-[#0a0a0c]">
           <div>
-            <h2 className="text-lg font-bold text-gray-900 tracking-tight">
-              Distribusi Kriteria & Bobot
+            <h2 className="text-xl font-black text-white tracking-widest uppercase italic text-shadow-persona">
+              Distribusi Kriteria
             </h2>
-            <p className="text-xs text-gray-500 mt-1">
-              Ringkasan struktur pembobotan algoritma SAW.
+            <p className="text-xs font-bold text-gray-400 mt-1 uppercase">
+              Struktur Bobot SAW
             </p>
           </div>
-          <div className="bg-blue-50 px-3 py-1.5 rounded-lg border border-blue-100">
-            <p className="text-[10px] font-bold text-blue-700 uppercase tracking-wider">
+          <div className="bg-[#004de6] px-4 py-2 border-2 border-white skew-x-[-5deg]">
+            <p className="text-[10px] font-black text-white uppercase tracking-widest skew-x-[5deg]">
               Total Bobot:{" "}
-              <span className="text-base ml-1 font-black">{totalBobot}</span>
+              <span className="text-base ml-1 font-black text-[#00b3ff]">{totalBobot}</span>
             </p>
           </div>
         </div>
@@ -176,44 +176,40 @@ export default function DashboardOverview({
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="bg-gray-50/80 text-gray-400 text-[10px] sm:text-xs uppercase tracking-widest border-b border-gray-100">
-                <th className="px-6 py-4 font-bold w-20">Kode</th>
-                <th className="px-6 py-4 font-bold">Nama Kriteria</th>
-                <th className="px-6 py-4 font-bold w-32 text-center">
-                  Atribut
-                </th>
-                <th className="px-6 py-4 font-bold text-right w-28">
-                  Bobot (W)
-                </th>
+              <tr className="bg-[#004de6] text-white text-[10px] sm:text-xs font-black uppercase tracking-widest border-b-4 border-[#0a0a0c]">
+                <th className="px-6 py-4 w-20">Kode</th>
+                <th className="px-6 py-4">Nama Kriteria</th>
+                <th className="px-6 py-4 w-32 text-center">Atribut</th>
+                <th className="px-6 py-4 text-right w-28">Bobot (W)</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-50">
+            <tbody className="divide-y-2 divide-[#0a0a0c]">
               {kriteria.map((k: any) => (
                 <tr
                   key={k.id}
-                  className="hover:bg-gray-50/80 transition-colors group"
+                  className="bg-[#121212] hover:bg-[#004de6]/20 transition-colors group"
                 >
                   <td className="px-6 py-3">
-                    <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-gray-100 text-gray-600 font-black text-[10px] group-hover:bg-white group-hover:shadow-sm transition-all">
-                      {k.kode}
+                    <span className="inline-flex items-center justify-center w-8 h-8 bg-[#0a0a0c] text-white font-black text-xs border border-[#00b3ff] skew-x-[-5deg]">
+                      <span className="skew-x-[5deg]">{k.kode}</span>
                     </span>
                   </td>
-                  <td className="px-6 py-3 text-sm font-bold text-gray-700 group-hover:text-blue-600 transition-colors">
-                    {k.nama || "Kriteria SAW"}
+                  <td className="px-6 py-3 text-sm font-black text-white uppercase tracking-wider group-hover:text-[#00b3ff] transition-colors">
+                    {k.nama || "KRITERIA SAW"}
                   </td>
                   <td className="px-6 py-3 text-center">
                     <span
-                      className={`inline-flex px-2.5 py-1 rounded-full text-[9px] sm:text-[10px] font-bold uppercase tracking-widest ${
+                      className={`inline-flex px-3 py-1 text-[10px] font-black uppercase tracking-widest skew-x-[-10deg] border-2 ${
                         k.tipe?.toLowerCase() === "cost"
-                          ? "bg-rose-50 text-rose-600 border border-rose-100"
-                          : "bg-emerald-50 text-emerald-600 border border-emerald-100"
+                          ? "bg-black text-[#ff003c] border-[#ff003c]"
+                          : "bg-black text-[#00ff88] border-[#00ff88]"
                       }`}
                     >
-                      {k.tipe || "Benefit"}
+                      <span className="skew-x-[10deg]">{k.tipe || "BENEFIT"}</span>
                     </span>
                   </td>
                   <td className="px-6 py-3 text-right">
-                    <span className="font-mono text-lg font-black text-gray-600 group-hover:text-gray-900 transition-colors">
+                    <span className="font-mono text-xl font-black text-[#00b3ff] group-hover:text-white transition-colors italic">
                       {k.bobot}
                     </span>
                   </td>
