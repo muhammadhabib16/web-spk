@@ -10,7 +10,7 @@ export default function LoginButton() {
     <button
       type="submit"
       disabled={pending}
-      className="w-full bg-blue-600 hover:bg-blue-500 disabled:bg-blue-400 disabled:cursor-not-allowed active:scale-95 disabled:active:scale-100 text-white font-black py-5 rounded-2xl transition-all duration-300 shadow-xl shadow-blue-300/50 mt-4 flex items-center justify-center gap-3 text-lg"
+      className="w-full bg-white hover:bg-[#ff003c] disabled:bg-gray-800 disabled:text-gray-500 disabled:cursor-not-allowed active:scale-95 disabled:active:scale-100 text-black hover:text-white font-black uppercase py-5 transition-all duration-300 mt-4 flex items-center justify-center gap-3 text-lg clip-persona-button skew-x-[-5deg]"
     >
       {pending ? (
         <>

@@ -23,7 +23,7 @@ export default async function LoginPage({
 
   return (
     // Container Utama: Split Screen
-    <div className="min-h-screen flex relative overflow-hidden bg-gradient-to-br from-blue-50 via-white to-blue-100">
+    <div className="min-h-screen flex relative overflow-hidden bg-[#0a0a0c] bg-persona-grid">
       {/* --- SISI KIRI: Visual & Partikel (Sembunyi di layar HP) --- */}
       <div className="hidden md:flex flex-1 relative flex-col items-center justify-center p-12">
         {/* Partikel Interaktif */}
@@ -39,10 +39,10 @@ export default async function LoginPage({
 
         {/* Copywriting Branding */}
         <div className="relative z-10 text-center select-none pointer-events-none">
-          <div className="inline-flex items-center justify-center w-20 h-20 bg-blue-600 rounded-2xl mb-8 shadow-2xl shadow-blue-400/40 rotate-3">
+          <div className="inline-flex items-center justify-center w-24 h-24 bg-[#004de6] mb-8 border-4 border-white skew-x-[-15deg] clip-persona-card">
             {/* ICON DIPERBARUI: Tas Belanja */}
             <svg
-              className="w-10 h-10 text-white"
+              className="w-12 h-12 text-white skew-x-[15deg]"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -51,35 +51,36 @@ export default async function LoginPage({
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                strokeWidth={2}
+                strokeWidth={3}
                 d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
               />
             </svg>
           </div>
-          <h2 className="text-5xl lg:text-6xl font-black text-gray-900 tracking-tighter leading-tight mb-4">
+          <h2 className="text-5xl lg:text-7xl font-black text-white tracking-tighter leading-tight mb-4 uppercase italic text-shadow-persona">
             Keputusan Tepat,
             <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">
+            <span className="text-[#00b3ff]">
               Masa Depan Cepat.
             </span>
           </h2>
-          <p className="text-gray-500 font-medium text-lg lg:text-xl">
+          <p className="text-gray-300 font-bold text-lg lg:text-2xl uppercase tracking-widest skew-x-[-5deg]">
             Sistem Penunjang Keputusan E-Commerce Fashion.
           </p>
         </div>
       </div>
 
       {/* --- SISI KANAN: Panel Form Login --- */}
-      {/* Menggunakan w-full di HP, max-w-md/lg di desktop, rounded-none agar nempel ke tepi */}
-      <div className="w-full md:w-[450px] lg:w-[500px] bg-white/95 backdrop-blur-2xl h-screen flex flex-col justify-center px-8 sm:px-14 border-l border-gray-100 shadow-[-20px_0_40px_-15px_rgba(0,0,0,0.05)] relative z-10 animate-in slide-in-from-right-16 duration-700 overflow-y-auto">
+      {/* Menggunakan clip-path custom untuk sisi kiri panel yang miring */}
+      <div 
+        className="w-full md:w-[450px] lg:w-[500px] bg-[#121212] h-screen flex flex-col justify-center px-8 sm:px-14 border-l-8 border-[#004de6] shadow-2xl relative z-10 animate-in slide-in-from-right-16 duration-700 overflow-y-auto"
+      >
         {/* Header Form */}
         <div className="mb-10">
-          <h1 className="text-3xl sm:text-4xl font-black text-gray-900 tracking-tight">
-            Selamat Datang
+          <h1 className="text-4xl sm:text-5xl font-black text-white tracking-tighter uppercase italic text-shadow-persona">
+            Otentikasi
           </h1>
-          <p className="text-sm font-medium text-gray-500 mt-2">
-            Silakan masuk dengan kredensial administrator Anda untuk mengakses
-            Dashboard SPK.
+          <p className="text-sm font-bold text-[#00b3ff] mt-2 uppercase tracking-widest border-l-4 border-white pl-2 skew-x-[-5deg]">
+            Akses Administrator SPK
           </p>
         </div>
 
@@ -104,31 +105,30 @@ export default async function LoginPage({
         )}
 
         {/* Form Login */}
-        <form action={signIn} className="space-y-5">
+        <form action={signIn} className="space-y-6">
           <div className="space-y-2">
-            <label className="text-[11px] font-bold text-gray-500 uppercase tracking-widest ml-1">
-              Alamat Email
+            <label className="text-[12px] font-black text-white uppercase tracking-widest skew-x-[-5deg] inline-block bg-[#004de6] px-2 py-1 clip-persona-tag">
+              <span className="skew-x-[5deg] block">Alamat Email</span>
             </label>
-            {/* Radius dikurangi menjadi rounded-xl, bukan lagi 2xl/3rem */}
             <input
               type="email"
               name="email"
               required
               placeholder="admin@spk.com"
-              className="w-full px-5 py-4 bg-gray-50/50 border border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-50 focus:bg-white focus:border-blue-400 focus:outline-none transition-all duration-300 font-semibold text-gray-800 placeholder:text-gray-400"
+              className="w-full px-5 py-4 bg-black border-2 border-gray-800 focus:border-[#00b3ff] focus:outline-none transition-all duration-300 font-bold text-white placeholder:text-gray-600 clip-persona-button"
             />
           </div>
 
           <div className="space-y-2">
-            <label className="text-[11px] font-bold text-gray-500 uppercase tracking-widest ml-1">
-              Password
+            <label className="text-[12px] font-black text-white uppercase tracking-widest skew-x-[-5deg] inline-block bg-[#004de6] px-2 py-1 clip-persona-tag">
+              <span className="skew-x-[5deg] block">Password</span>
             </label>
             <input
               type="password"
               name="password"
               required
               placeholder="••••••••"
-              className="w-full px-5 py-4 bg-gray-50/50 border border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-50 focus:bg-white focus:border-blue-400 focus:outline-none transition-all duration-300 font-semibold text-gray-800 placeholder:text-gray-400"
+              className="w-full px-5 py-4 bg-black border-2 border-gray-800 focus:border-[#00b3ff] focus:outline-none transition-all duration-300 font-bold text-white placeholder:text-gray-600 clip-persona-button"
             />
           </div>
 
