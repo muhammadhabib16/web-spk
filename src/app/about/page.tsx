@@ -70,7 +70,7 @@ export default function AboutPage() {
             Sistem Penunjang Keputusan{" "}
             <span className="text-blue-600">SAW</span>
           </h1>
-          <p className="text-gray-500 text-base leading-relaxed bg-white/50 backdrop-blur-sm p-4 rounded-2xl inline-block border border-white/60 shadow-sm">
+          <p className="text-gray-200 text-base leading-relaxed bg-white/50 backdrop-blur-sm p-4 rounded-2xl inline-block border border-white/60 shadow-sm">
             Sistem ini dirancang untuk memberikan rekomendasi pemilihan platform
             E-Commerce Fashion terbaik. Dibangun menggunakan algoritma matematis{" "}
             <strong>Simple Additive Weighting (SAW)</strong>, sistem ini
